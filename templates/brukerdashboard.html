@@ -1,5 +1,30 @@
 {% extends 'brukerbase.html' %}
 
 {% block content %}
-  <h1>Brukerdashboard</h1>
+
+<h1>Tilgjengelige Quizzer</h1>
+<hr>
+{% if quizzes %}
+{% for quiz in quizzes %}
+
+<h2>{{ quiz.navn }}</h2>
+{% if quiz.sporsmal %}
+<h3>Spørsmål:</h3>
+<ul>
+    {% for sporsmal in quiz.sporsmal %}
+    <li>{{ sporsmal.tekst }}</li>
+    <ul>
+        {% for svar in sporsmal.svar %}
+        <li {% if svar.is_riktig %}style="color:green; font-weight:bold;"{% endif %}>{{ svar.tekst }}</li>
+            {% endfor %}
+    </ul>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Ingen spørsmål funnet i denne quizzen</p>
+{% endif %}
+{% endfor %}
+{% else %}
+<p>Ingen quizzer funnet</p>
+{% endif %}
 {% endblock %}
